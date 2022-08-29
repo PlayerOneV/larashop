@@ -1,4 +1,4 @@
 <x-layout>
-    <h1>Soap {{$id}}</h1>
-    <p>Best soap in this page</p>
+    <h1>{{$product->title}}</h1>
+    <p>{{$product->description}}</p>
 </x-layout>

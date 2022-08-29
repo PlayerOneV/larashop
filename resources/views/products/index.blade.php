@@ -10,16 +10,13 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($products as $product)
                 <tr>
-                    <td>1</td>
-                    <td>Soap</td>
-                    <td>A good soap</td>
+                    <td>{{$product->id}}</td>
+                    <td>{{$product->title}}</td>
+                    <td>{{$product->description}}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Shampoo</td>
-                    <td>A good shampoo</td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

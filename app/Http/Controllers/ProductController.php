@@ -14,6 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
+        //Enviamos todos los productos a la vista
         $products = Product::all();
         return view('products.index', ['products' => $products]);
     }
@@ -25,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        //Redirigimos a la vista que muestra el form para crear un producto
     }
 
     /**
@@ -36,7 +37,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Almacenamos el nuevo producto en la bd
     }
 
     /**
@@ -47,7 +48,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        /* $product = Product::find($id); */
+        //Regresamos el producto especifico a la vista
         return view('products.show', ['product' => $product]);
     }
 
@@ -59,7 +60,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        //Regresamos la vista que muestra el form para editar un producto
     }
 
     /**
@@ -71,7 +72,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //Actualizamos un producto en la bd
     }
 
     /**
@@ -82,6 +83,6 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Eliminamos un producto de la base de datos
     }
 }

@@ -2,6 +2,9 @@
     <x-slot:title>
         Products
     </x-slot>
+    {{--@isset($message)
+        <p>{{$message}}</p>
+    @endisset--}}
     @empty ($products)
         <div class="alert alert-warning">There are not products yet</div>
     @else

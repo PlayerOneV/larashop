@@ -27,6 +27,7 @@ class ProductController extends Controller
     public function create()
     {
         //Redirigimos a la vista que muestra el form para crear un producto
+        return view('products.create');
     }
 
     /**
@@ -38,6 +39,16 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //Almacenamos el nuevo producto en la bd
+        /* Product::create([
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+            'price' => $request->input('price'),
+            'stock' => $request->input('stock'),
+            'status' =>$request->input('status')
+        ]); */
+        Product::create($request->all());
+
+        return view('products.index')->with('message' , 'Product created succesfully');
     }
 
     /**

@@ -69,9 +69,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
         //Regresamos la vista que muestra el form para editar un producto
+        return view('products.edit', ['product' => $product]);
     }
 
     /**
@@ -84,6 +85,10 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         //Actualizamos un producto en la bd
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
+
+        return view('products.edit', ['product' => $product]);
     }
 
     /**

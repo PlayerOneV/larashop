@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -36,8 +37,9 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
+        $request->validate();
         //El producto no debe estar disponible si tiene stock 0
         if ($request->status && $request->stock == 0) {
             session()->flash('error', 'If the product is available must have stock');
@@ -90,8 +92,16 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreProductRequest $request, $id)
     {
+        $request->validate();
+        //El producto no debe estar disponible si tiene stock 0
+        if ($request->status && $request->stock == 0) {
+            session()->flash('error', 'If the product is available must have stock');
+
+            return redirect()->back();
+        }
+        
         //Actualizamos un producto en la bd
         $product = Product::findOrFail($id);
         $product->update($request->all());

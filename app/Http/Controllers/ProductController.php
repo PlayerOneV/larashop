@@ -55,7 +55,7 @@ class ProductController extends Controller
         ]); */
         //session()->forget('error');
         Product::create($request->all());
-
+        session()->flash('success', "The product {$request->title} was created successfully");
         //return redirect()->back(); regresa a la vista update
         return redirect()->route('products.index');
     }

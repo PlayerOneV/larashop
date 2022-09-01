@@ -2,6 +2,11 @@
     <x-slot:title>
         Products
         </x-slot>
+        @if (session()->has('success'))
+        <div class="alert alert-success">
+            {{session()->get('success')}}
+        </div>
+        @endif
         <a class="btn btn-success" href="{{route('products.create')}}">Create product</a>
         {{--@isset($message)
         <p>{{$message}}</p>

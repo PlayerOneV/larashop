@@ -39,12 +39,13 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $request->validate();
+        $validated = $request->safe()->all();
+
         //El producto no debe estar disponible si tiene stock 0
-        if ($request->status && $request->stock == 0) {
+        if ($validated->status && $validated->stock == 0) {
             session()->flash('error', 'If the product is available must have stock');
 
-            return redirect()->back();
+            return redirect()->back()->withInput($validated);
         }
         //Almacenamos el nuevo producto en la bd
         /* Product::create([
@@ -55,7 +56,7 @@ class ProductController extends Controller
             'status' =>$request->input('status')
         ]); */
         //session()->forget('error');
-        Product::create($request->all());
+        Product::create($validated);
 
         //return redirect()->back(); regresa a la vista update
         return redirect()->route('products.index');
@@ -94,17 +95,17 @@ class ProductController extends Controller
      */
     public function update(StoreProductRequest $request, $id)
     {
-        $request->validate();
+        $validated = $request->safe()->all();
         //El producto no debe estar disponible si tiene stock 0
-        if ($request->status && $request->stock == 0) {
+        if ($validated->status && $validated->stock == 0) {
             session()->flash('error', 'If the product is available must have stock');
 
             return redirect()->back();
         }
-        
+
         //Actualizamos un producto en la bd
         $product = Product::findOrFail($id);
-        $product->update($request->all());
+        $product->update($validated);
 
         //return redirect()->route('products.index');
         return redirect()->route('products.edit', ['product' => $id]);

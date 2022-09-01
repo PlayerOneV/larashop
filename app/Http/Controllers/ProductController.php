@@ -48,7 +48,8 @@ class ProductController extends Controller
         ]); */
         Product::create($request->all());
 
-        return view('products.index')->with('message' , 'Product created succesfully');
+        //return redirect()->back(); regresa a la vista update
+        return redirect()->route('products.index');
     }
 
     /**
@@ -88,7 +89,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
-        return view('products.edit', ['product' => $product]);
+        return redirect()->route('products.edit', ['product' => $id]);
     }
 
     /**
@@ -100,5 +101,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //Eliminamos un producto de la base de datos
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return $product;
     }
 }

@@ -33,9 +33,15 @@
                         <td>{{$product->stock}}</td>
                         <td>{{$product->status ? 'Avaible' : 'Unavaible'}}</td>
                         <td>
-                            <a class="btn btn-link" href="{{route('products.show', ['product' => $product->id])}}">Show</a>
-                            <a class="btn btn-link" href="{{route('products.edit', ['product' => $product->id])}}">Edit</a>
-                            <a class="btn btn-link" href="{{route('products.destroy', ['product' => $product->id])}}">Delete</a>
+                            <a class="btn btn-link"
+                                href="{{route('products.show', ['product' => $product->id])}}">Show</a>
+                            <a class="btn btn-link"
+                                href="{{route('products.edit', ['product' => $product->id])}}">Edit</a>
+                            <form method="POST" action="{{route('products.destroy', ['product' => $product->id])}}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-link">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach

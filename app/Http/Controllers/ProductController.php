@@ -38,6 +38,12 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        //El producto no debe estar disponible si tiene stock 0
+        if ($request->status && $request->stock == 0) {
+            session()->flash('error', 'If the product is available must have stock');
+
+            return redirect()->back();
+        }
         //Almacenamos el nuevo producto en la bd
         /* Product::create([
             'title' => $request->input('title'),
@@ -46,6 +52,7 @@ class ProductController extends Controller
             'stock' => $request->input('stock'),
             'status' =>$request->input('status')
         ]); */
+        //session()->forget('error');
         Product::create($request->all());
 
         //return redirect()->back(); regresa a la vista update
@@ -89,6 +96,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
+        //return redirect()->route('products.index');
         return redirect()->route('products.edit', ['product' => $id]);
     }
 
@@ -104,6 +112,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return $product;
+        return redirect()->route('products.index');
     }
 }

@@ -78,9 +78,7 @@
         </nav>
 
         <main class="py-4">
-            <div class="container">
-                {{ $slot }}
-            </div>
+            {{ $slot }}
         </main>
     </div>
 </body>

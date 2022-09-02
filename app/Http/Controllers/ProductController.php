@@ -41,9 +41,8 @@ class ProductController extends Controller
     {
         //El producto no debe estar disponible si tiene stock 0
         if ($request->status && $request->stock == 0) {
-            session()->flash('error', 'If the product is available must have stock');
-
-            return redirect()->back()->withInput($request->all());
+            return redirect()->back()->withInput($request->all())
+                ->withErrors('If the product is available must have stock');
         }
         //Almacenamos el nuevo producto en la bd
         /* Product::create([
@@ -55,9 +54,8 @@ class ProductController extends Controller
         ]); */
         //session()->forget('error');
         Product::create($request->all());
-        session()->flash('success', "The product {$request->title} was created successfully");
         //return redirect()->back(); regresa a la vista update
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with(['success' => "The product {$request->title} was created successfully"]);
     }
 
     /**
@@ -95,9 +93,8 @@ class ProductController extends Controller
     {
         //El producto no debe estar disponible si tiene stock 0
         if ($request->status && $request->stock == 0) {
-            session()->flash('error', 'If the product is available must have stock');
-
-            return redirect()->back();
+            return redirect()->back()->withInput($request->all())
+                ->withErrors('If the product is available must have stock');
         }
 
         //Actualizamos un producto en la bd
@@ -105,7 +102,8 @@ class ProductController extends Controller
         $product->update($request->all());
 
         //return redirect()->route('products.index');
-        return redirect()->route('products.edit', ['product' => $id]);
+        return redirect()->route('products.edit', ['product' => $id])
+            ->with(['success' => "The product {$request->title} was updated successfully"]);
     }
 
     /**
@@ -120,6 +118,6 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with(['success' => "The product {$product->title} was deleted successfully"]);
     }
 }

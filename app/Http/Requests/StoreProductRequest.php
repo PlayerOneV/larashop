@@ -31,4 +31,14 @@ class StoreProductRequest extends FormRequest
             'status' => ['required', 'boolean'],
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            //El producto no debe estar disponible si tiene stock 0
+            if ($this->status && $this->stock == 0) {
+                $validator->errors()->add('stock', 'If the product is available must have stock');
+            }
+        });
+    }
 }

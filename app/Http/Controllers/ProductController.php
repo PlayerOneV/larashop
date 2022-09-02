@@ -12,6 +12,7 @@ class ProductController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -43,21 +44,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //El producto no debe estar disponible si tiene stock 0
-        if ($request->status && $request->stock == 0) {
-            return redirect()->back()->withInput($request->all())
-                ->withErrors('If the product is available must have stock');
-        }
-        //Almacenamos el nuevo producto en la bd
-        /* Product::create([
-            'title' => $request->input('title'),
-            'description' => $request->input('description'),
-            'price' => $request->input('price'),
-            'stock' => $request->input('stock'),
-            'status' =>$request->input('status')
-        ]); */
-        //session()->forget('error');
-        Product::create($request->all());
+        Product::create($request->validated());
         //return redirect()->back(); regresa a la vista update
         return redirect()->route('products.index')->with(['success' => "The product {$request->title} was created successfully"]);
     }
@@ -93,20 +80,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProductRequest $request, $id)
+    public function update(StoreProductRequest $request, Product $product)
     {
-        //El producto no debe estar disponible si tiene stock 0
-        if ($request->status && $request->stock == 0) {
-            return redirect()->back()->withInput($request->all())
-                ->withErrors('If the product is available must have stock');
-        }
-
         //Actualizamos un producto en la bd
-        $product = Product::findOrFail($id);
-        $product->update($request->all());
+        $product->update($request->validated());
 
         //return redirect()->route('products.index');
-        return redirect()->route('products.edit', ['product' => $id])
+        return redirect()->route('products.edit', ['product' => $product])
             ->with(['success' => "The product {$request->title} was updated successfully"]);
     }
 
@@ -116,10 +96,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
         //Eliminamos un producto de la base de datos
-        $product = Product::findOrFail($id);
         $product->delete();
 
         return redirect()->route('products.index')->with(['success' => "The product {$product->title} was deleted successfully"]);

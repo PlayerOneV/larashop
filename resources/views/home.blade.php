@@ -1,24 +1,17 @@
 <x-layout>
     <x-slot:title>
-        Home
-    </x-slot>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">{{ __('Dashboard') }}</div>
-
-                        <div class="card-body">
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
-
-                            {{ __('You are logged in!') }}
-                        </div>
-                    </div>
-                </div>
-            </div>
+        Welcome
+    </x-slot:title>
+    @empty($products)
+        <div class="alert alert-warning">
+            There is not products yet!
         </div>
+    @endempty
+    <div class="row">
+        @foreach ($products as $product)
+            <div class="col-3">
+                <x-product-card :product="$product"></x-product-card>
+            </div>
+        @endforeach
+    </div>
 </x-layout>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->float('amount')->unsigned();
             $table->timestamp('payed_at')->nullable();
-            $table->foreignId('order_id')->constrained();
+            //$table->foreignId('order_id')->constrained();
             $table->timestamps();
         });
     }

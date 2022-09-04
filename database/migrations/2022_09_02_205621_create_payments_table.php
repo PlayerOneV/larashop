@@ -17,8 +17,11 @@ return new class extends Migration
             $table->id();
             $table->float('amount')->unsigned();
             $table->timestamp('payed_at')->nullable();
-            //$table->foreignId('order_id')->constrained();
+            $table->bigInteger('order_id')->unsigned();
             $table->timestamps();
+            
+            $table->foreign('order_id')->references('id')->on('orders');
+            //$table->foreignId('order_id')->constrained();
         });
     }
 

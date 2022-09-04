@@ -23,9 +23,15 @@ class DatabaseSeeder extends Seeder
     {
         $users = User::factory(10)->create();
         Product::factory(10)->create();
-        Order::factory(10)->create();
+        $orders = Order::factory(10)->create();
         Cart::factory(2)->create();
-        Payment::factory(4)->create();
+        Payment::factory(4)->create(
+            (function() use ($orders) {
+                return [
+                    'order_id' => $orders->random()->id,
+                ];
+            })
+        );
         Image::factory(5)->create();
         Image::factory(4)->user()->create();
 

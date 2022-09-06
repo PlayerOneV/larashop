@@ -7,12 +7,18 @@ use App\Models\Cart;
 
 class CartService
 {
+    protected $cookieNane = 'cart';
     public function getFromCookieOrCreate()
     {
-        $cartId = Cookie::get('cart');
+        $cartId = Cookie::get($this->cookieNane);
 
         $cart = Cart::find($cartId);
 
         return $cart ?? Cart::create();
+    }
+
+    public function makeCookie($cart)
+    {
+        return Cookie::make($this->cookieNane, $cart->id, 7 * 24 * 60);
     }
 }

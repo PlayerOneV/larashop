@@ -5,9 +5,18 @@
         <h5 class="card-title">{{ $product->title }}</h5>
         <p class="card-text">{{ $product->description }}</p>
         <p class="card-text"><strong>{{ $product->stock }} left</strong></p>
-        <form action="{{ route('products.carts.store', ['product' => $product->id]) }}" method="POST" class="d-inline">
-            @csrf
-            <button type="submit" class="btn btn-success">Add to car</button>
-        </form>
+        @isset($cart)
+            <form action="{{ route('products.carts.destroy', ['product' => $product->id, 'cart' => $cart]) }}"
+                method="POST" class="d-inline">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="btn btn-danger">Remove from car</button>
+            </form>
+        @else
+            <form action="{{ route('products.carts.store', ['product' => $product->id]) }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-success">Add to car</button>
+            </form>
+        @endisset
     </div>
 </div>

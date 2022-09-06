@@ -7,14 +7,16 @@ use Illuminate\View\Component;
 class productCard extends Component
 {
     public $product;
+    public $cart;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($product)
+    public function __construct($product, $cart = null)
     {
         $this->product = $product;
+        $this->cart = $cart;
     }
 
     /**

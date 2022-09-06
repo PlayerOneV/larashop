@@ -2,7 +2,7 @@
     <x-slot:title>
         Cart
     </x-slot:title>
-    @empty($cart->products)
+    @if (!isset($cart) || $cart->products->isEmpty())
         <div class="alert alert-warning">
             Your cart is empty!
         </div>
@@ -14,5 +14,5 @@
                 </div>
             @endforeach
         </div>
-    @endempty
+    @endif
 </x-layout>

@@ -22,7 +22,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = $this->cartService->getFromCookieOrCreate();
+        $cart = $this->cartService->getFromCookie();
         //dd($cart->id);
         return view('carts.index', ['cart' => $cart, 'cartId' => $cart->id]);
     }

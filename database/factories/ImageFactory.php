@@ -16,7 +16,7 @@ class ImageFactory extends Factory
      */
     public function definition()
     {
-        $fileName = fake()->numberBetween(1, 10) . 'jpg';
+        $fileName = fake()->numberBetween(1, 10) . '.jpg';
 
         return [
             'path' => "img/products/{$fileName}"
@@ -25,7 +25,7 @@ class ImageFactory extends Factory
 
     public function user()
     {
-        $fileName = fake()->numberBetween(1, 5) . 'jpg';
+        $fileName = fake()->numberBetween(1, 5) . '.jpg';
 
         return $this->state([
             'path' => "img/users/{$fileName}"

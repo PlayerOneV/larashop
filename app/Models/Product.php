@@ -17,6 +17,13 @@ class Product extends Model
         'status'
     ];
 
+    public function scopeAvailable($query)
+    {
+        $query->where('status', 1);
+    }
+
+
+    // Relations
     public function carts()
     {
         return $this->morphedByMany(Cart::class, 'productable')->withPivot('quantity');

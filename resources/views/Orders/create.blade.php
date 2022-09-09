@@ -8,7 +8,13 @@
             </div>
         @endif
         <h1>Order details</h1>
-        <h4 class="text-center"><strong>Grand Total: </strong> $ {{$cart->total}}</h4>
+        <h4 class="text-center"><strong>Grand Total: </strong> $ {{ $cart->total }}</h4>
+        <div class="text-center mb-3">
+            <form action="{{ route('orders.store') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-success">Confirm Order</button>
+            </form>
+        </div>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-light">

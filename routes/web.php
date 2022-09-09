@@ -22,9 +22,9 @@ Route::resource('products', ProductController::class);
 
 Route::resource('products.carts', ProductCartController::class)->only(['store', 'destroy']);
 
-Route::resource('carts', CartController::class)->only(['index']);
+Route::resource('carts', CartController::class)->only(['index'])->middleware('auth');
 
-Route::resource('orders', OrderController::class)->only(['create', 'store']);
+Route::resource('orders', OrderController::class)->only(['create', 'store'])->middleware('auth');
  
 Auth::routes();
 

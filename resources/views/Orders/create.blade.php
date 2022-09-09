@@ -8,6 +8,7 @@
             </div>
         @endif
         <h1>Order details</h1>
+        <h4 class="text-center"><strong>Grand Total: </strong> $ {{$cart->total}}</h4>
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead class="thead-light">
@@ -29,7 +30,7 @@
                             <td>{{ $product->pivot->quantity }}</td>
                             <td>
                                 <strong>
-                                    {{ $product->price * $product->pivot->quantity }}
+                                    {{ $product->total }}
                                 </strong>
                             </td>
                         </tr>

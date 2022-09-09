@@ -22,6 +22,10 @@ class Product extends Model
         $query->where('status', 1);
     }
 
+    public function getTotalAttribute()
+    {
+        return $this->price * $this->pivot->quantity;
+    }
 
     // Relations
     public function carts()

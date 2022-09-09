@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderPaymentController;
 use App\Http\Controllers\ProductCartController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,9 @@ Route::resource('products.carts', ProductCartController::class)->only(['store', 
 Route::resource('carts', CartController::class)->only(['index'])->middleware('auth');
 
 Route::resource('orders', OrderController::class)->only(['create', 'store'])->middleware('auth');
- 
+
+Route::resource('orders.payments', OrderPaymentController::class)->only(['create', 'store'])->middleware('auth');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
